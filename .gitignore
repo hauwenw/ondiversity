@@ -1,0 +1,8 @@
+# Dependency directories
+app/node_modules/
+
+# config file
+app/config.js
+
+# data file
+app/data/

@@ -1,0 +1,98 @@
+extends layout
+block content
+    h2.page-header Welcome to On Diversity
+    .col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
+      #step1
+        h4 Step 1: Drag and Drop CSV file
+        form#my-awesome-dropzone.dropzone(action='/input')
+      #step2
+        h4 Step 2: Define your group
+        btn.btn.btn-primary.add-group add group
+        btn.btn.btn-primary.remove-group remove group
+        #step2-target
+      #step3
+        h4 Step 3: Define your attribute order
+    script(src='/dropzone/dropzone.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/Sortable/1.5.1/Sortable.min.js')
+    script.
+        // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+        Dropzone.options.myAwesomeDropzone = {
+          paramName: "file", 
+          maxFilesize: 2, // MB
+          maxFiles: 1,
+          acceptedFiles: 'text/csv,.csv',
+          accept: function(file, done) {
+            done();
+          },
+          success: function(file, res) {
+            //- STEP 2: DEFINE GROUPS *******************************************************
+            var target = document.getElementById('step2-target')
+            function addGroup(){
+              var group = document.createElement('div')
+              var groupName = document.createElement('input');
+              var groupSum = document.createElement('input');
+              group.setAttribute('class', 'form-group');
+              groupName.setAttribute('type', 'text');
+              groupName.setAttribute('class', 'form-control');
+              groupName.setAttribute('placeholder', 'Group Name');
+              groupName.setAttribute('required', true);
+              groupSum.setAttribute('type', 'number');
+              groupSum.setAttribute('class', 'form-control');
+              groupSum.setAttribute('placeholder', 'Number of the Group');
+              groupSum.setAttribute('required', true);
+              target.appendChild(group);
+              group.appendChild(groupName);
+              group.appendChild(groupSum);
+            }
+            
+            //- var newGroup = 'Group Name: <input type="text"><br>Sum of the group: <input type="text"><br><button class="btn btn-primary add-group">Add Group</button>';
+            
+            addGroup();
+            $('.add-group').on('click', function(){
+              addGroup();
+            })
+            $('.remove-group').on('click', function(){
+              target.removeChild(target.lastChild)
+            })
+            //- STEP 3: SELECT ATTRIBUTE ORDER  *********************************************
+            //- insert all the attribute into html list
+            var str = '<h4>Step 3: Define your attribute order</h4><ul id="sortables" class="list-group">';
+            for(i=0;i<res.length;i++){
+               str += '<li class="list-group-item">' + res[i] + '<span class="glyphicon glyphicon-remove js-remove" style="float:right"></span></li>';
+            }
+            str += '</ul><button type="button" class="btn btn-primary" id="submit">Submit and Analyze!</button>';
+            document.getElementById('step3').innerHTML = str;
+
+            //- *****************************************************************************
+
+            //- create sortable function
+            var el = document.getElementById('sortables');
+            var sortable = Sortable.create(el, {
+              filter: ".js-remove",
+              onFilter: function (evt) {
+                var item = evt.item,
+                ctrl = evt.target;
+                if (Sortable.utils.is(ctrl, ".js-remove")) {
+                  item.parentNode.removeChild(item);
+                }
+              }
+            });
+            $('#submit').on('click', function(){
+              var optionTexts = [];
+              var groupNames = [];
+              var groupNums = [];
+              $(".list-group-item").each(function() { optionTexts.push($(this).text()) });
+              $("input[type='text']").each(function() { groupNames.push($(this).val()) });
+              $("input[type='number']").each(function() { groupNums.push($(this).val()) });
+              var result = {
+                order: JSON.stringify(optionTexts),
+                groupNames: JSON.stringify(groupNames),
+                groupNums: JSON.stringify(groupNums)
+              }
+              //- console.log(optionTexts);
+              $.post('/calculation', result, function(res){
+                window.location.href = "/output"
+              });
+            })
+          }
+        };

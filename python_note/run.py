@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import pandas as pd
 from sortData import sorting
@@ -5,12 +6,22 @@ from cleanData import dataCleanUp
 from grouping import grouping
 
 
-file_name = input('Please enter file name or press enter to continue')
-cr = None
-GroupName = ['Section', 'Study Group']
-NumofGroup = [3, 15]
-if file_name == '':
-    file_name = "/Users/Robin/Documents/GitHub/ondiversity/Data/data_public1.csv"
+file_name, cr, GroupName, NumofGroup, user_id = sys.argv[1:]
+
+# file_name = input('Please enter file name or press enter to continue')
+# cr = None
+# GroupName = ['Section', 'Study Group']
+# NumofGroup = [3, 15]
+# if file_name == '':
+#     file_name = "~/version-control/ondiversity/Data/data_public1.csv"
+cr = cr.split(',')
+GroupName = GroupName.split(',')
+NumofGroup = NumofGroup.split(',')
+temp = []
+for i in NumofGroup:
+    temp.append(int(i))
+NumofGroup = temp
+
 
 df = pd.read_csv(file_name)
 df = dataCleanUp(df)
@@ -25,4 +36,4 @@ for i in range(len(GroupName)):
 
     df = grouping(df,NumofGroup[i],indexG,GroupName[i], cr)
     
-df.to_csv('output.csv')
+df.to_csv('./app/data/{0}_output.csv'.format(user_id))
