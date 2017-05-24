@@ -24,9 +24,9 @@ if(app.get('env') === 'development') {
   mongoose.connect('mongodb://localhost/ondiversity?socketTimeoutMS=300000');
 }
 else {
-  console.log('production?')
+  console.log('production')
   config = require('./config').production;
-  mongoose.connect('mongodb://localhost/ondiversity?socketTimeoutMS=300000');
+  mongoose.connect(`mongodb:${config.db.user}:${config.db.pass}//@localhost/ondiversity?socketTimeoutMS=300000`);
 }
 
 
