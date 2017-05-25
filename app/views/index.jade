@@ -3,26 +3,26 @@ block content
     h2.page-header Welcome to On Diversity
     .col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
         //- Nav tabs
-        ul.nav.nav-tabs(role='tablist')
-            li.nav-item
-                a.nav-link.show.active(data-toggle='tab', href='#login', role='tab') Login
-            li.nav-item
-                a.nav-link(data-toggle='tab', href='#register', role='tab') Register
+        //- ul.nav.nav-tabs(role='tablist')
+        //-     li.nav-item
+        //-         a.nav-link.show.active(data-toggle='tab', href='#login', role='tab') Login
+        //-     li.nav-item
+        //-         a.nav-link(data-toggle='tab', href='#register', role='tab') Register
         //- Tab panes
-        .tab-content
-            #login.tab-pane.active(role='tabpanel')
-                form(action="/login", method="post")
-                    .form-group
-                        input.form-control(type="text" placeholder="username" name="username")
-                    .form-group
-                        input.form-control(type="password" placeholder="password" name="password")
-                    .form-group    
-                        button.btn.btn-primary Login
-            #register.tab-pane(role='tabpanel')
-                form(action="/register", method="post")
-                    .form-group
-                        input.form-control(type="text" placeholder="username" name="username")
-                    .form-group
-                        input.form-control(type="password" placeholder="password" name="password")
-                    .form-group
-                        button.btn.btn-primary Register    
+        //- .tab-content
+        //-     #login.tab-pane.active(role='tabpanel')
+        form(action="/login", method="post")
+            .form-group
+                input.form-control(type="email" placeholder="username" name="username")
+            .form-group
+                input.form-control(type="password" placeholder="password" name="password")
+            .form-group    
+                button.btn.btn-primary Login
+            //- #register.tab-pane(role='tabpanel')
+            //-     form(action="/register", method="post")
+            //-         .form-group
+            //-             input.form-control(type="text" placeholder="username" name="username")
+            //-         .form-group
+            //-             input.form-control(type="password" placeholder="password" name="password")
+            //-         .form-group
+            //-             button.btn.btn-primary Register    
