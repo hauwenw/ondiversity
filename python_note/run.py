@@ -1,4 +1,5 @@
 import sys
+import os
 import numpy as np
 import pandas as pd
 from sortData import sorting
@@ -36,4 +37,5 @@ for i in range(len(GroupName)):
 
     df = grouping(df,NumofGroup[i],indexG,GroupName[i], cr)
     
-df.to_csv('./app/data/{0}_output.csv'.format(user_id))
+dir_path = os.path.dirname(os.path.realpath(__file__))
+df.to_csv(dir_path + '/../app/data/{0}_output.csv'.format(user_id))
