@@ -130,8 +130,8 @@ exports.getInput = (req,res,next) => {
 }
 
 exports.getOutput = (req,res,next) => {
-    const outputPath = __dirname + `/data/${req.user._id}_output.csv`;
-    if (fs.existsSync(outputPath)){
+    const outputPath = `/data/${req.user._id}_output.csv`;
+    if (fs.existsSync(__dirname + outputPath)){
         console.log('outpu')
         res.render('output', {message: req.flash('message'), outputPath: outputPath});    
     }
