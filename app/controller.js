@@ -132,10 +132,13 @@ exports.getInput = (req,res,next) => {
 exports.getOutput = (req,res,next) => {
     const outputPath = `/data/${req.user._id}_output.csv`;
     if (fs.existsSync(__dirname + outputPath)){
-        console.log('outpu')
-        res.render('output', {message: req.flash('message'), outputPath: outputPath});    
+        // console.log('outpu')
+        res.render('output', {message: req.flash('message')});    
     }
-    else{flashAndRedirect(req,res,'Error');}
+    else{flashAndRedirect(req,res,'Error');}    
+}
 
-    
+exports.download = (req,res,next) => {
+    const file = __dirname + `/data/${req.user._id}_output.csv`;
+    res.download(file); // Set disposition and send it.
 }

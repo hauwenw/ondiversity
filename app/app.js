@@ -89,7 +89,7 @@ app.post('/input', middleware.requireLogin, upload.single('file'), controller.po
 app.post('/calculation', middleware.requireLogin, controller.postCalculation)
 app.get('/output', middleware.requireLogin, controller.getOutput);
 app.get('/logout', controller.getLogout)
-
+app.get('/download', middleware.requireLogin, controller.download);
 
 
 // error
