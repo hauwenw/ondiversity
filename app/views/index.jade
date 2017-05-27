@@ -1,7 +1,9 @@
 extends layout
 block content
-    h2.page-header Welcome to On Diversity
-    .col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
+    #title(style="display:none;padding-top:2cm;")
+        h1.text-center(style="font-family: 'Pacifico', cursive;color:#2980b9;") Welcome to On Diversity!
+        
+        
         //- Nav tabs
         //- ul.nav.nav-tabs(role='tablist')
         //-     li.nav-item
@@ -11,13 +13,20 @@ block content
         //- Tab panes
         //- .tab-content
         //-     #login.tab-pane.active(role='tabpanel')
-        form(action="/login", method="post")
-            .form-group
-                input.form-control(type="email" placeholder="username" name="username")
-            .form-group
-                input.form-control(type="password" placeholder="password" name="password")
-            .form-group    
-                button.btn.btn-primary Login
+    .col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4
+        #login(style="display:none;padding-top:2cm;")
+            if !user
+                form(action="/login", method="post")
+                    .form-group
+                        input.form-control(type="email" placeholder="username" name="username")
+                    .form-group
+                        input.form-control(type="password" placeholder="password" name="password")
+                    .form-group    
+                        button.btn.btn-primary Login
+            else
+                .text-center
+                    a(href="/input")
+                        btn.btn.btn-default Proceed to File Upload
             //- #register.tab-pane(role='tabpanel')
             //-     form(action="/register", method="post")
             //-         .form-group
@@ -25,4 +34,9 @@ block content
             //-         .form-group
             //-             input.form-control(type="password" placeholder="password" name="password")
             //-         .form-group
-            //-             button.btn.btn-primary Register    
+            //-             button.btn.btn-primary Register 
+block script
+    script.
+        $('#title').fadeIn('slow',function(){
+            $('#login').fadeIn(1000)
+        })

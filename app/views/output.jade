@@ -1,6 +1,12 @@
 extends layout
 block content
-    h2.page-header Download Result
-    .col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
+    #title(style="display:none;padding-top:2cm;")
+        h1.text-center(style="font-family: 'Pacifico', cursive;color:#2980b9;") It's Done, here you go!
+    .col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4.text-center#download(style="display:none;padding-top:2cm;")
         a(href="/download" download)
-            button.btn.btn-primary Download
+            button.btn.btn-default Download!
+block script
+    script.
+        $('#title').fadeIn('slow',function(){
+            $('#download').fadeIn(1000)
+        })

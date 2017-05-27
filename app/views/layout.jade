@@ -7,11 +7,13 @@ html(lang="en")
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
         link(href="/dropzone/basic.css", rel="stylesheet")
         link(href="/dropzone/dropzone.css", rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet")
     body
         nav.navbar.navbar-default
             .container-fluid
                 .navbar-header
-                    a.navbar-brand(href='#') On Diversity
+                    a.navbar-brand(href='/')
+                        p(style="font-family: 'Pacifico', cursive;color:#2980b9;") On Diversity
                 #bs-example-navbar-collapse-1.collapse.navbar-collapse
                     ul.nav.navbar-nav.navbar-right
                         if user
@@ -31,3 +33,4 @@ html(lang="en")
     script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
     //- Latest compiled and minified JavaScript
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    block script
