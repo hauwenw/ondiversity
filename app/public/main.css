@@ -1,0 +1,6 @@
+#content {
+    background-image: url(/public/b5.jpg);
+    background-color: rgba(255,255,255,0.6);
+    background-blend-mode: lighten;
+    /* You may add things like width, height, background-size... */
+}
