@@ -61,6 +61,7 @@ exports.postCalculation = (req,res,next) => {
         GroupName = ['Section', 'Study Group'];
         NumofGroup = [3,15];
     }
+    GroupName = ['Main Group', 'Sub Group'];
     // const NumofGroup = [3,15];
     let divProcess = child_process.spawn('python3', [__dirname + '/../python_note/run.py', file_name, cr, GroupName, NumofGroup, req.user._id]);
     divProcess.stdout.on('data', (data) => {

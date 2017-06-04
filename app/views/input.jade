@@ -2,15 +2,16 @@ extends layout
 block content
     .col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
       #step1(style="display:none")
-        h4 Step 1: Drag and Drop CSV file
+        h4 Step 1: Upload CSV file
         form#my-awesome-dropzone.dropzone(action='/input')
+          .dz-message.needsclick
+            | DROP csv file here<br>or<br>CLICK to choose file
       #step2(style="display:none;padding-top: 1cm;")
         h4 Step 2: Define your group
         btn.btn.btn-default.add-group add group
         btn.btn.btn-default.remove-group remove group
         #step2-target
       #step3(style="display:none;padding-top: 1cm;height:600px")
-        h4 Step 3: Define your attribute order
 block script
   script(src='/dropzone/dropzone.js')
   script(src='//cdnjs.cloudflare.com/ajax/libs/Sortable/1.5.1/Sortable.min.js')
@@ -19,6 +20,7 @@ block script
       $('#step1').fadeIn(1000);
       // "myAwesomeDropzone" is the camelized version of the HTML element's ID
       Dropzone.options.myAwesomeDropzone = {
+        //- clickable: '#click-upload',
         paramName: "file", 
         maxFilesize: 2, // MB
         maxFiles: 1,
@@ -30,32 +32,51 @@ block script
           //- STEP 2: DEFINE GROUPS *******************************************************
           var target = document.getElementById('step2-target')
           function addGroup(){
-            var group = document.createElement('div')
-            var groupName = document.createElement('input');
-            var groupSum = document.createElement('input');
-            group.setAttribute('class', 'form-group');
-            //- group.setAttribute('style', 'padding-top:0.2cm;padding-bottom:0.2cm;');
-            groupName.setAttribute('type', 'text');
-            groupName.setAttribute('class', 'form-control');
-            groupName.setAttribute('placeholder', 'Group Name');
-            groupName.setAttribute('required', true);
-            groupSum.setAttribute('type', 'number');
-            groupSum.setAttribute('class', 'form-control');
-            groupSum.setAttribute('placeholder', 'Number of the Group');
-            groupSum.setAttribute('required', true);
-            target.appendChild(group);
-            group.appendChild(groupName);
-            group.appendChild(groupSum);
+            var row = document.createElement('div')
+            var labelName = document.createElement('label');
+            var divName =  document.createElement('div');
+            var inputName = document.createElement('input');
+            var labelSum = document.createElement('label');
+            var divSum =  document.createElement('div');
+            var inputSum = document.createElement('input');
+            row.setAttribute('class', 'form-group row');
+            inputName.setAttribute('type', 'text');
+            inputName.setAttribute('class', 'form-control');
+            inputName.setAttribute('placeholder', 'Group Name');
+            inputSum.setAttribute('type', 'number');
+            inputSum.setAttribute('class', 'form-control');
+            inputSum.setAttribute('placeholder', 'Number of the Group');
+            target.appendChild(row);
+            row.appendChild(inputName);
+            row.appendChild(inputSum);
           }
           
         
           
           addGroup();
           $('.add-group').on('click', function(){
-            addGroup();
+            var groupCount = $('.row').length;
+            if(groupCount === 1) {
+              $('.add-group').attr('disabled', true);
+              addGroup();
+            }
+            else if(groupCount === 0){
+              $('.remove-group').attr('disabled', false);
+              addGroup()
+            };
           })
           $('.remove-group').on('click', function(){
-            target.removeChild(target.lastChild)
+            var groupCount = $('.row').length;
+            $('.form-group').last().fadeOut(300, function(){
+              $('.form-group').last().remove();
+            })
+            //- check and disable remove group btn
+            if (groupCount === 2){
+              $('.add-group').attr('disabled', false);
+            }
+            else if (groupCount === 0){
+              $('.remove-group').attr('disabled', true);
+            }
           })
           //- STEP 3: SELECT ATTRIBUTE ORDER  *********************************************
           //- insert all the attribute into html list

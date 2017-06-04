@@ -4,3 +4,22 @@
     background-blend-mode: lighten;
     /* You may add things like width, height, background-size... */
 }
+
+#my-awesome-dropzone {
+    border-style: dashed;
+    color: rgba(0,0,0, 0.2);
+    font-size: 30px;
+    font-weight: bold;
+    background-color:rgba(255,255,255, 0.7);
+}
+
+.list-group-item {
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 4px;
+    margin: 3px; 
+}
+
+.form-control {
+    background-color: rgba(255,255,255,0.7);
+    margin: 3px; 
+}
