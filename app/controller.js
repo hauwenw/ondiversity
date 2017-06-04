@@ -50,19 +50,14 @@ exports.postInput = (req,res,next) => {
 exports.postCalculation = (req,res,next) => {
     const file_name = __dirname + `/data/${req.user._id}_input.csv`;
     const cr = JSON.parse(req.body.order);
-    let GroupName = JSON.parse(req.body.groupNames);
-    // const GroupName = ['Section', 'Study Group'];
+    // let GroupName = JSON.parse(req.body.groupNames);
+    let GroupName;
     let NumofGroup = [];
     JSON.parse(req.body.groupNums).forEach(item => {
-        NumofGroup.push(Number(item));
+        if (item) NumofGroup.push(Number(item));
     });
-    console.log(req.body)
-    if (GroupName.length === 0 || GroupName[0] === "") {
-        GroupName = ['Section', 'Study Group'];
-        NumofGroup = [3,15];
-    }
-    GroupName = ['Main Group', 'Sub Group'];
-    // const NumofGroup = [3,15];
+    (NumofGroup.length === 2 ? GroupName = ['Main Group', 'Sub Group'] : GroupName = ['Main Group']);
+    console.log(cr);
     let divProcess = child_process.spawn('python3', [__dirname + '/../python_note/run.py', file_name, cr, GroupName, NumofGroup, req.user._id]);
     divProcess.stdout.on('data', (data) => {
         console.log('stdout: ' + data);
