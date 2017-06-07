@@ -14,14 +14,16 @@ source("functions.R")
 
 ```{r}
 # check what's in there
-names(out_data)
+names(data)
+out_data <- data
+
 ```
 
 
 ```{r}
-p <-ggplot(out_data, aes(Primary.Nat,fill = Gender))
+p <-ggplot(data, aes(Primary.Nat,fill = Gender))
 p <- p +geom_bar(stat = "count") 
-p <- p + facet_grid(section ~ .)
+p <- p + facet_grid(Section ~ .)
 p <- p + scale_fill_brewer(palette="Set1")
 p <- p + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 p

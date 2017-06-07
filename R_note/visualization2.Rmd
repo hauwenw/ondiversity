@@ -68,6 +68,32 @@ p2 <- p2 + facet_grid(Type~ ., scales = "free")
 p2 <- p2 +  theme(legend.position="none")
 p2 <- p2 +   labs(title="Richness")
 
+
+grid.arrange(p2,p1,  ncol=2)
+```
+
+```{r}
+grdata <- data[,  c("Gender", "Primary.Nat", "Last.Job.Domain.Description")]
+grgroup <- data$Section
+dfoutClass <- tabDiversity(grdata, grgroup, nicknames)
+head(dfoutClass,3)
+```
+
+```{r}
+p1 <- ggplot(dfoutClass[dfoutClass$variable == "IER",], aes(x = Group, y = value, fill = Scale))
+p1 <- p1 + geom_bar(stat = "identity")
+p1 <- p1 + facet_grid(Type ~ ., scales = "free")
+p1 <- p1 +  theme(legend.position="none")
+p1 <- p1 +   labs(title="IER")
+
+
+p2 <- ggplot(dfoutClass[dfoutClass$variable == "Richness",], aes(x = Group, y = value, fill = Scale))
+p2 <- p2 + geom_bar(stat = "identity")
+p2 <- p2 + facet_grid(Type~ ., scales = "free")
+p2 <- p2 +  theme(legend.position="none")
+p2 <- p2 +   labs(title="Richness")
+
+
 grid.arrange(p2,p1,  ncol=2)
 ```
 

@@ -17,8 +17,5 @@ def sorting(df = None, cr1=None):
         print("System has assigned the first 3 headers as new criteria")
         cr1 = list(df)[1:3]
 
-    new_df = df.sort_values(cr1)
+    new_df = df.sort_values(by = cr1)
     return new_df
-    
-
-    

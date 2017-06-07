@@ -6,3 +6,11 @@ app/config.js
 
 # data file
 app/data/
+
+*~
+.*~
+.DS_Store
+.Rhistory
+.RData
+*.docx
+*.doc
