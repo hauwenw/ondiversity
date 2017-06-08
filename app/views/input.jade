@@ -28,7 +28,7 @@ block script
           //- STEP 2: DEFINE GROUPS *******************************************************
           $('#step2').append('<h4>Step 2: Divide into Groups</h4>').hide().fadeIn(1000);
           $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Main Group</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? groups" id="main-division"></div></div>').hide().fadeIn(1000);
-          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Sub Group (opt)</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? groups" id="sub-division"></div></div>').hide().fadeIn(1000);
+          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Sub Group (opt)</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? of subgroup under each main groups" id="sub-division"></div></div>').hide().fadeIn(1000);
           
         
           
@@ -97,7 +97,7 @@ block script
               }
               //- console.log(optionTexts);
               $.post('/calculation', result, function(res){
-                window.location.href = "/output"
+                window.location.href = "/output?sub=" + groupNums[0]
               });
             }
             

@@ -57,7 +57,7 @@ exports.postCalculation = (req,res,next) => {
         if (item) NumofGroup.push(Number(item));
     });
     (NumofGroup.length === 2 ? GroupName = ['Main Group', 'Sub Group'] : GroupName = ['Main Group']);
-    console.log(cr);
+    console.log(file_name, cr, GroupName, NumofGroup, req.user._id);
     let divProcess = child_process.spawn('python3', [__dirname + '/../python_note/run.py', file_name, cr, GroupName, NumofGroup, req.user._id]);
     divProcess.stdout.on('data', (data) => {
         console.log('stdout: ' + data);
@@ -67,7 +67,8 @@ exports.postCalculation = (req,res,next) => {
     });
     divProcess.on('close', (code)=> {
         console.log('close');
-        res.send('done')
+        console.log(String(NumofGroup[0]))
+        res.send(String(NumofGroup[0]))
     });
 }
 
@@ -129,7 +130,8 @@ exports.getOutput = (req,res,next) => {
     const outputPath = `/data/${req.user._id}_output.csv`;
     if (fs.existsSync(__dirname + outputPath)){
         // console.log('outpu')
-        res.render('output', {message: req.flash('message')});    
+        const sub = Array(Number(req.query.sub)).fill().map((v,i)=>i+1);
+        res.render('output', {message: req.flash('message'), sub: sub, id: req.user._id});    
     }
     else{flashAndRedirect(req,res,'Error');}    
 }

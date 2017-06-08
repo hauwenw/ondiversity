@@ -47,6 +47,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.set('views', __dirname + '/views');
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/data', express.static(__dirname + '/data'));
 app.use('/dropzone', express.static(__dirname + '/node_modules/dropzone/dist'));
 app.use(morgan('dev'));
 

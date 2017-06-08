@@ -2,11 +2,42 @@ extends layout
 block content
     #title(style="display:none;padding-top:2cm;")
         h1.text-center(style="font-family: 'Pacifico', cursive;color:#2980b9;font-size:50px") It's Done, here you go!
-    .col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4.text-center#download(style="display:none;padding-top:2cm;")
-        a(href="/download" download)
-            button.btn.btn-default Download!
+    .row
+        .col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4.text-center#download(style="display:none;padding-top:1cm;")
+            a(href="/download" download)
+                button.btn.btn-default Download csv file
+    .row.graph(style="display:none;padding-top:1cm;")
+        .col-xs-4.col-xs-offset-4
+            h5 Main Group
+            a.pop(href="#")
+                img.img-thumbnail(src="/data/#{id}_main.png" alt="result" style="")
+    .row.graph(style="display:none;padding-top:1cm;")
+        each item in sub
+            - var src = "/data/"+ id + "_sub_main" + item + ".png"
+            .col-xs-4
+                h5 Sub Group ##{item}
+                a.pop(href="#")
+                    img.img-thumbnail(src="#{src}" alt="result")
+    //- Modal
+    #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#myModalLabel.modal-title Image Preview
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    img#imagepreview(src="" style="width:550px;")
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+
 block script
     script.
         $('#title').fadeIn('slow',function(){
-            $('#download').fadeIn(1000)
+            $('#download').fadeIn(1000);
+            $('.graph').fadeIn(1000);
+        });
+        $('.pop').on('click', function(){
+            $('#imagepreview').attr('src', jQuery("img",this).attr('src'));
+        $('#myModal').modal('show');
         })
