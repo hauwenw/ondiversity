@@ -12,7 +12,9 @@ block content
             a.pop(href="#")
                 img.img-thumbnail(src="/data/#{id}_main.png" alt="result" style="")
     .row.graph(style="display:none;padding-top:1cm;")
-        each item in sub
+        each item, index in sub
+            if ((Number(index)) % 3 == 0)
+                .row
             - var src = "/data/"+ id + "_sub_main" + item + ".png"
             .col-xs-4
                 h5 Sub Group ##{item}

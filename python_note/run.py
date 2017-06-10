@@ -5,6 +5,8 @@ import pandas as pd
 from sortData import sorting
 from cleanData import dataCleanUp
 from grouping import grouping
+import matplotlib
+matplotlib.use('Agg')
 from graph import *
 
 file_name, cr, groupName, numofGroup, user_id = sys.argv[1:]
