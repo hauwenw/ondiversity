@@ -49,7 +49,7 @@ def calc(df, cr, groupName):
             mainResult.set_value(index,'cr', c)
             mainResult.set_value(index, calculations[0], r)
             mainResult.set_value(index, calculations[1], IER)
-            if subgroup != None:
+            if subgroup is not None:
                 #Iterate through subgroup
                 for s in subgroup:
                     tempdf = df[(df[groupName[0]]==i) & (df[groupName[1]]==s)]
