@@ -25,9 +25,9 @@ block content
                             .form-group
                                 input.form-control(type="text" placeholder="email" name="username" required)
                             .form-group
-                                input.form-control(type="password" placeholder="password" name="password" required)
+                                input.form-control(type="password" placeholder="password" name="register-password" required)
                             .form-group
-                                input.form-control(type="password" placeholder="confirm password" name="confirmPassword" required)
+                                input.form-control(type="password" placeholder="confirm password" name="confirm-password" required)
                             .form-group
                                 .g-recaptcha(data-sitekey="6LeFJSUUAAAAANCNNahTp8kteh2afO6wSJYmzI1i")
                             .form-group
@@ -43,7 +43,7 @@ block script
             $('#auth').fadeIn(1000)
         })
         $('button[type="submit"]').on('click', function(e){
-            if($('input[name="password"]').val() !== $('input[name="confirmPassword"]').val()){
+            if($('input[name="register-password"]').val() != $('input[name="confirm-password"]').val()){
                 e.preventDefault();
                 alert('password does not match!')
             }

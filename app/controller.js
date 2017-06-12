@@ -105,7 +105,8 @@ exports.postLogin = (req,res,next) => {
 exports.postRegister = (req,res,next) => {
     request.post({url:'https://www.google.com/recaptcha/api/siteverify', 
             json: true,
-            form: {secret: secret, response: req.body['g-recaptcha-response']}}, function(err, httpResponse,body){
+            form: {secret: secret, response: req.body['g-recaptcha-response']}}, 
+            function(err, httpResponse,body){
                 if(!body.success || err) {
                     console.log(err);
                     console.log(body)
@@ -114,11 +115,12 @@ exports.postRegister = (req,res,next) => {
                 else {
                     User.findOne({username: req.body.username})
                         .then(user => {
+                            console.log('finish query')
                             if(user){flashAndRedirect(req,res,'username already taken')}
                             else{
                                 const newUser = new User();
                                 newUser.username = req.body.username;
-                                newUser.password = newUser.generateHash(req.body.password);
+                                newUser.password = newUser.generateHash(req.body['register-password']);
                                 return newUser.save();
                             }
                         })        
@@ -128,8 +130,11 @@ exports.postRegister = (req,res,next) => {
                             req.flash('message', 'Register successfully');
                             res.redirect('/input');
                         })
-                        .catch(err => {flashAndRedirect(req,res,'Error')});
-                        }
+                        .catch(err => {
+                            console.log(err);
+                            flashAndRedirect(req,res,'Error')
+                        });
+                };
             });
 };
 exports.getLogout = (req,res,next) => {
