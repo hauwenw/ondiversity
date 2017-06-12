@@ -98,8 +98,8 @@ def chart(df, cr, groupName, filename):
    
     #Build the subplots
     for i, com in enumerate(calculations):
-        for k, c, ax in zip([0,1,2], cr, axes):
-            
+        for c, ax in zip(cr, axes):
+            k = cr.index(c)
             ax[i].set_ylabel(c)
             
             df[df['cr'] == c].plot(x=groupName, y = com, 

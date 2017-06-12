@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const fs = require('fs');
 const Promise = require('bluebird');
+const request = require('request');
+
+const secret = require('./config').production.reCAPTCHAsecret;
 
 const flashAndRedirect = (req,res,message,uri="/") => {
     req.flash('message', message);
@@ -100,22 +103,34 @@ exports.postLogin = (req,res,next) => {
 };
 
 exports.postRegister = (req,res,next) => {
-    User.findOne({username: req.body.username})
-        .then(user => {
-            if(user){flashAndRedirect(req,res,'username already taken')}
-            else{
-                const newUser = new User();
-                newUser.username = req.body.username;
-                newUser.password = newUser.generateHash(req.body.password);
-                return newUser.save();
-            }
-        })
-        .then(user => {
-            req.session.user = user;
-            req.flash('message', 'Register successfully');
-            res.redirect('/input');
-        })
-        .catch(err => {flashAndRedirect(req,res,'Error')});
+    request.post({url:'https://www.google.com/recaptcha/api/siteverify', 
+            json: true,
+            form: {secret: secret, response: req.body['g-recaptcha-response']}}, function(err, httpResponse,body){
+                if(!body.success || err) {
+                    console.log(err);
+                    console.log(body)
+                    res.send('Recaptcha Verification Error')
+                }
+                else {
+                    User.findOne({username: req.body.username})
+                        .then(user => {
+                            if(user){flashAndRedirect(req,res,'username already taken')}
+                            else{
+                                const newUser = new User();
+                                newUser.username = req.body.username;
+                                newUser.password = newUser.generateHash(req.body.password);
+                                return newUser.save();
+                            }
+                        })        
+                
+                        .then(user => {
+                            req.session.user = user;
+                            req.flash('message', 'Register successfully');
+                            res.redirect('/input');
+                        })
+                        .catch(err => {flashAndRedirect(req,res,'Error')});
+                        }
+            });
 };
 exports.getLogout = (req,res,next) => {
     req.session.reset();

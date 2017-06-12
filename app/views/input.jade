@@ -27,8 +27,20 @@ block script
         success: function(file, res) {
           //- STEP 2: DEFINE GROUPS *******************************************************
           $('#step2').append('<h4>Step 2: Divide into Groups</h4>').hide().fadeIn(1000);
-          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Main Group</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? groups" id="main-division"></div></div>').hide().fadeIn(1000);
-          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Sub Group (opt)</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? of subgroup under each main groups" id="sub-division"></div></div>').hide().fadeIn(1000);
+          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Main Group</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? groups" id="main-division" min=1 max=10></div></div>').hide().fadeIn(1000);
+          $('#step2').append('<div class="form-group row"><label class="col-xs-2 col-form-label">Sub Group (opt)</label><div class="col-xs-10"><input class="form-control" type="Number" placeholder="Divide into ? of subgroup under each main groups" id="sub-division" min=1 max=10></div></div>').hide().fadeIn(1000);
+          //- disable mousewheel on a input number field when in focus
+          //- (to prevent Cromium browsers change the value when scrolling)
+          $('form').on('focus', 'input[type=number]', function (e) {
+            console.log('meh')
+            $(this).on('mousewheel.disableScroll', function (e) {
+              e.preventDefault()
+            })
+          })
+          $('form').on('blur', 'input[type=number]', function (e) {
+            console.log('meh2')
+            $(this).off('mousewheel.disableScroll')
+          })
           
         
           
@@ -62,7 +74,7 @@ block script
           for(i=0;i<res.length;i++){
              str += '<li class="list-group-item">' + res[i] + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true" class="js-remove">&times;</span></button></li>';
           }
-          str += '</ul><button type="button" class="btn btn-default" id="submit">Submit and Analyze!</button>';
+          str += '</ul><button type="button" class="btn btn-default" id="submit">Submit and Analyze!</button><p class="loader" style="display:none"></p>';
           document.getElementById('step3').innerHTML = str;
 
           //- *****************************************************************************
@@ -87,6 +99,9 @@ block script
               var optionTexts = [];
               var groupNames = [];
               var groupNums = [];
+              //- remove button and show spinning stuff
+              $('#submit').css('display', 'none');
+              $('.loader').css('display', 'block');
               $(".list-group-item").each(function() { optionTexts.push($(this).text().replace('×', '')) });
               //- $("input[type='text']").each(function() { groupNames.push($(this).val()) });
               $("input[type='number']").each(function() { groupNums.push($(this).val()) });
@@ -99,6 +114,7 @@ block script
               $.post('/calculation', result, function(res){
                 window.location.href = "/output?sub=" + groupNums[0]
               });
+
             }
             
           })

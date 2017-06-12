@@ -1,9 +1,15 @@
 #content {
     background-image: url(/public/b5.jpg);
     background-size:cover;
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.7);
     background-blend-mode: lighten;
     /* You may add things like width, height, background-size... */
+}
+
+#auth-div {
+    padding: 20px;
+    border-radius: 5px;
+    background-color:rgba(255,255,255, 0.8);
 }
 
 #my-awesome-dropzone {
@@ -23,4 +29,34 @@
 .form-control {
     background-color: rgba(255,255,255,0.7);
     margin: 3px; 
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-radius: 90%;
+  border-top: 6px solid #2980b9;
+  width: 34px;
+  height: 34px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

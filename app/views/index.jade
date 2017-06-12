@@ -1,42 +1,50 @@
 extends layout
 block content
     #title(style="display:none;padding-top:2cm;")
-        h1.text-center(style="font-family: 'Pacifico', cursive;color:#2980b9;font-size:50px") Welcome to On Diversity!
-        
-        
-        //- Nav tabs
-        //- ul.nav.nav-tabs(role='tablist')
-        //-     li.nav-item
-        //-         a.nav-link.show.active(data-toggle='tab', href='#login', role='tab') Login
-        //-     li.nav-item
-        //-         a.nav-link(data-toggle='tab', href='#register', role='tab') Register
-        //- Tab panes
-        //- .tab-content
-        //-     #login.tab-pane.active(role='tabpanel')
-    .col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4
-        #login(style="display:none;padding-top:2cm;")
+        h1.text-center(style="font-family: 'Pacifico', cursive;color:#2980b9;font-size:50px;padding-bottom:1cm;") Welcome to On Diversity!
+        #auth-div.col-xs-6.col-xs-offset-3
             if !user
-                form(action="/login", method="post")
-                    .form-group
-                        input.form-control(type="email" placeholder="username" name="username")
-                    .form-group
-                        input.form-control(type="password" placeholder="password" name="password")
-                    .form-group    
-                        button.btn.btn-primary Login
+                //- Nav tabs
+                ul.nav.nav-tabs(role='tablist')
+                    li.nav-item
+                        a.nav-link.show.active(data-toggle='tab', href='#login', role='tab') Login
+                    li.nav-item
+                        a.nav-link(data-toggle='tab', href='#register', role='tab') Register
+                //- Tab panes
+                .tab-content#auth(style="display:none;")
+                    #login.tab-pane.active(role='tabpanel')
+                        form(action="/login", method="post")
+                            .form-group
+                                input.form-control(type="email" placeholder="email" name="username" required)
+                            .form-group
+                                input.form-control(type="password" placeholder="password" name="password" required)
+                            .form-group    
+                                button.btn.btn-primary Login
+                    #register.tab-pane(role='tabpanel')
+                        form(action="/register", method="post")
+                            .form-group
+                                input.form-control(type="text" placeholder="email" name="username" required)
+                            .form-group
+                                input.form-control(type="password" placeholder="password" name="password" required)
+                            .form-group
+                                input.form-control(type="password" placeholder="confirm password" name="confirmPassword" required)
+                            .form-group
+                                .g-recaptcha(data-sitekey="6LeFJSUUAAAAANCNNahTp8kteh2afO6wSJYmzI1i")
+                            .form-group
+                                button.btn.btn-primary(type="submit") Register 
             else
                 .text-center
                     a(href="/input")
                         btn.btn.btn-default Proceed to File Upload
-            //- #register.tab-pane(role='tabpanel')
-            //-     form(action="/register", method="post")
-            //-         .form-group
-            //-             input.form-control(type="text" placeholder="username" name="username")
-            //-         .form-group
-            //-             input.form-control(type="password" placeholder="password" name="password")
-            //-         .form-group
-            //-             button.btn.btn-primary Register 
+            
 block script
     script.
         $('#title').fadeIn('slow',function(){
-            $('#login').fadeIn(1000)
+            $('#auth').fadeIn(1000)
+        })
+        $('button[type="submit"]').on('click', function(e){
+            if($('input[name="password"]').val() !== $('input[name="confirmPassword"]').val()){
+                e.preventDefault();
+                alert('password does not match!')
+            }
         })
